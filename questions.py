@@ -1,28 +1,30 @@
 import random
 
-words = [
-    "python",
-    "programa",
-    "variable",
-    "funcion",
-    "bucle",
-    "cadena",
-    "entero",
-    "lista",
-]
+# --- cambio de una lista por diccionario ---
+dictionary = {
+    "programacion": ["python", "programa", "variable", "funcion", "bucle", "cadena", "entero", "lista"],
+    "animales": ["perro", "gato", "elefante", "tigre", "delfin"],
+    "paises": ["argentina", "brasil", "uruguay", "chile", "peru"]
+}
 
-score = 0 # variable mod del puntaje 
+score = 0 
 
-# --- bucle para testear correcto funcionamiento del score ---
+
 while True:
-
-    word = random.choice(words).upper() # para mayor claridad convierto a mayus 
-    guessed = []
-    attempts = 6
-
-
     print("¡Bienvenido al Ahorcado!")
-    print()
+    print("\nCategorias disponibles:")
+    for category in dictionary.keys():
+        print(f"- {category.capitalize()}")
+
+    category = input("Elegi una categoria: ").lower()
+
+    while category not in dictionary:
+        print("Categoria no valida, intente de nuevo.")
+        category = input("Elegi una categoria: ").lower()
+    
+    word = random.choice(dictionary[category]).upper() 
+    guessed = [] 
+    attempts = 6 
 
     while attempts > 0:
         # Mostrar progreso: letras adivinadas y guiones para las que faltan
