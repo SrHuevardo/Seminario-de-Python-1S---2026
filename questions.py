@@ -11,7 +11,7 @@ words = [
     "lista",
 ]
 
-word = random.choice(words)
+word = random.choice(words).upper() # para mayor claridad convierto a mayus 
 guessed = []
 attempts = 6
 
@@ -37,8 +37,13 @@ while attempts > 0:
     print(f"Intentos restantes: {attempts}")
     print(f"Letras usadas: {', '.join(guessed)}")
     
-    letter = input("Ingresá una letra: ")
+    letter = input("Ingresá una letra: ").upper() # en caso de que se ingrese una minuscula, automaticamente se convierte en mayus
     
+    # --- Modificacion de Bug ---
+    if len(letter) != 1 or not letter.isalpha():
+        print("Entrada no valida")
+        continue
+
     if letter in guessed:
         print("Ya usaste esa letra.")
     elif letter in word:
