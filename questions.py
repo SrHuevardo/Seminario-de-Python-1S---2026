@@ -1,13 +1,16 @@
 import random
 
-# --- cambio de una lista por diccionario ---
+
 dictionary = {
     "programacion": ["python", "programa", "variable", "funcion", "bucle", "cadena", "entero", "lista"],
-    "animales": ["perro", "gato", "elefante", "tigre", "delfin"],
+    "animales": ["perro", "gato"],
     "paises": ["argentina", "brasil", "uruguay", "chile", "peru"]
 }
 
 score = 0 
+
+# lista de palabras ya jugadas
+usedWords = []
 
 
 while True:
@@ -22,7 +25,16 @@ while True:
         print("Categoria no valida, intente de nuevo.")
         category = input("Elegi una categoria: ").lower()
     
-    word = random.choice(dictionary[category]).upper() 
+    #--- mod para evitar palabras ya jugadas --- 
+    avblWords = [aw for aw in dictionary[category] if aw not in usedWords]
+
+    if not avblWords:
+        print("No quedan palabras disponibles en esta categoria, elegi otra.")
+        continue
+
+    word = random.sample(avblWords, 1)[0].upper()
+    usedWords.append(word.lower())
+
     guessed = [] 
     attempts = 6 
 
@@ -47,7 +59,7 @@ while True:
         print(f"Intentos restantes: {attempts}")
         print(f"Letras usadas: {', '.join(guessed)}")
         
-        letter = input("Ingresá una letra: ").upper() # en caso de que se ingrese una minuscula, automaticamente se convierte en mayus
+        letter = input("Ingresá una letra: ").upper() 
         
         if len(letter) != 1 or not letter.isalpha():
             print("Entrada no valida")
@@ -71,7 +83,7 @@ while True:
 
 
 
-    again = input("¿Querés jugar otra vez? (s/n): ").lower() # corte del bucle
+    again = input("¿Querés jugar otra vez? (s/n): ").lower() 
     if again != 's':
         print(f"¡Gracias por jugar! Tu puntaje final es: {score}")
         break
