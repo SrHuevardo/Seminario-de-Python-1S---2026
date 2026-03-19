@@ -14,6 +14,7 @@ words = [
 word = random.choice(words).upper() # para mayor claridad convierto a mayus 
 guessed = []
 attempts = 6
+score = 0 # variable mod del puntaje 
 
 print("¡Bienvenido al Ahorcado!")
 print()
@@ -31,7 +32,9 @@ while attempts > 0:
 
     # Verificar si el jugador ya adivinó la palabra completa
     if "_" not in progress:
+        score += 6
         print("¡Ganaste!")
+        print (f"Tu puntaje es: {score}")
         break
         
     print(f"Intentos restantes: {attempts}")
@@ -39,7 +42,6 @@ while attempts > 0:
     
     letter = input("Ingresá una letra: ").upper() # en caso de que se ingrese una minuscula, automaticamente se convierte en mayus
     
-    # --- Modificacion de Bug ---
     if len(letter) != 1 or not letter.isalpha():
         print("Entrada no valida")
         continue
@@ -53,8 +55,10 @@ while attempts > 0:
         print("Esa letra no está en la palabra.")
         guessed.append(letter)
         attempts -= 1
-        
+        score -= 1 
     print()
 else:
     print(f"¡Perdiste! La palabra era: {word}")
+    score = 0
+    print(f"Tu puntaje final es: {score}")
     
