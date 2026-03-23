@@ -1,6 +1,5 @@
 import random
 
-
 dictionary = {
     "programacion": ["python", "programa", "variable", "funcion", "bucle", "cadena", "entero", "lista"],
     "animales": ["perro", "gato"],
@@ -8,28 +7,29 @@ dictionary = {
 }
 
 score = 0 
+category = None     # mod para poder decidir si cambiar o no la categoria.
 
-# lista de palabras ya jugadas
 usedWords = []
 
-
+print("¡Bienvenido al Ahorcado!")
 while True:
-    print("¡Bienvenido al Ahorcado!")
-    print("\nCategorias disponibles:")
-    for category in dictionary.keys():
-        print(f"- {category.capitalize()}")
-
-    category = input("Elegi una categoria: ").lower()
-
-    while category not in dictionary:
-        print("Categoria no valida, intente de nuevo.")
-        category = input("Elegi una categoria: ").lower()
     
-    #--- mod para evitar palabras ya jugadas --- 
+    if category is None:
+        print("\nCategorias disponibles:")
+        for category in dictionary.keys():
+            print(f"- {category.capitalize()}")
+        category = input("Elegi una categoria: ").lower()
+
+        while category not in dictionary:
+            print("Categoria no valida, intente de nuevo.")
+            category = input("Elegi una categoria: ").lower()
+
+
     avblWords = [aw for aw in dictionary[category] if aw not in usedWords]
 
     if not avblWords:
         print("No quedan palabras disponibles en esta categoria, elegi otra.")
+        category = None
         continue
 
     word = random.sample(avblWords, 1)[0].upper()
@@ -39,7 +39,7 @@ while True:
     attempts = 6 
 
     while attempts > 0:
-        # Mostrar progreso: letras adivinadas y guiones para las que faltan
+
         progress = ""
         for letter in word:
             if letter in guessed:
@@ -49,7 +49,6 @@ while True:
         
         print(progress)
 
-        # Verificar si el jugador ya adivinó la palabra completa
         if "_" not in progress:
             score += 6
             print("¡Ganaste!")
@@ -82,9 +81,22 @@ while True:
         print(f"Tu puntaje final es: {score}")
 
 
+#--- modificacion del corte del juego, para evitar respuestas invalidas y chance de cambiar la categoria ---
+    again = input("¿Queres jugar otra vez? (s/n): ").lower() 
+    
+    while again not in ['s', 'n']:
+        print("Entrada no válida. Por favor, ingresa 's' o 'n'.")
+        again = input("¿Queres jugar otra vez? (s/n): ").lower()
 
-    again = input("¿Querés jugar otra vez? (s/n): ").lower() 
-    if again != 's':
+    if again == 'n':
         print(f"¡Gracias por jugar! Tu puntaje final es: {score}")
         break
     
+    else:
+        changeCategory = input("Queres cambiar de categoria? (s/n): ").lower()
+        while changeCategory not in ['s', 'n']:
+            print("Entrada no válida. Por favor, ingresa 's' o 'n'.")
+            changeCategory = input("Queres cambiar de categoria? (s/n): ").lower()
+
+        if changeCategory == 's':
+            category = None
