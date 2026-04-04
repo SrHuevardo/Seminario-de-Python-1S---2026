@@ -1,0 +1,13 @@
+# Cache python
+__pycache__/
+*.pyc
+
+# Entorno virtual
+.venv/
+
+# Archivos Notebook
+.ipynb_checkpoints/
+
+# Archivos catedra
+01-practica.pdf
+02-practica.pdf
